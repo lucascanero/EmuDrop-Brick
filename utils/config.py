@@ -236,21 +236,26 @@ class Config:
         """Update screen size and recalculate all scaled dimensions"""
         cls.SCREEN_WIDTH = width
         cls.SCREEN_HEIGHT = height
-        cls.SCALE_X = width / cls.BASE_SCREEN_WIDTH  # Retained for potential per-axis scaling
+        cls.SCALE_X = width / cls.BASE_SCREEN_WIDTH
         cls.SCALE_Y = height / cls.BASE_SCREEN_HEIGHT
+        # Keep per-axis scales available for any view-specific adjustments.
         # Use the widest composite layout (game list + image + spacing) to cap scaling on narrow screens.
+        if (
+            cls.BASE_GAME_LIST_WIDTH <= 0 or
+            cls.BASE_GAME_LIST_IMAGE_SIZE <= 0 or
+            cls.BASE_GAME_LIST_SPACING_BETWEEN <= 0
+        ):
+            raise ValueError(
+                "Base game list layout values must be greater than zero "
+                f"(BASE_GAME_LIST_WIDTH={cls.BASE_GAME_LIST_WIDTH}, "
+                f"BASE_GAME_LIST_IMAGE_SIZE={cls.BASE_GAME_LIST_IMAGE_SIZE}, "
+                f"BASE_GAME_LIST_SPACING_BETWEEN={cls.BASE_GAME_LIST_SPACING_BETWEEN})."
+            )
         base_layout_width = (
             cls.BASE_GAME_LIST_WIDTH +
             cls.BASE_GAME_LIST_IMAGE_SIZE +
             cls.BASE_GAME_LIST_SPACING_BETWEEN
         )
-        if base_layout_width <= 0:
-            raise ValueError(
-                "Base game list layout width must be greater than zero "
-                f"(BASE_GAME_LIST_WIDTH={cls.BASE_GAME_LIST_WIDTH}, "
-                f"BASE_GAME_LIST_IMAGE_SIZE={cls.BASE_GAME_LIST_IMAGE_SIZE}, "
-                f"BASE_GAME_LIST_SPACING_BETWEEN={cls.BASE_GAME_LIST_SPACING_BETWEEN})."
-            )
         max_width_scale = width / base_layout_width
         cls.SCALE_FACTOR = min(cls.SCALE_Y, max_width_scale)
         
