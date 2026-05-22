@@ -238,12 +238,15 @@ class Config:
         cls.SCREEN_HEIGHT = height
         cls.SCALE_X = width / cls.BASE_SCREEN_WIDTH
         cls.SCALE_Y = height / cls.BASE_SCREEN_HEIGHT
+        # Use the widest composite layout (game list + image + spacing) to cap scaling on narrow screens.
         base_layout_width = (
             cls.BASE_GAME_LIST_WIDTH +
             cls.BASE_GAME_LIST_IMAGE_SIZE +
             cls.BASE_GAME_LIST_SPACING_BETWEEN
         )
-        max_width_scale = width / base_layout_width if base_layout_width else cls.SCALE_X
+        if base_layout_width <= 0:
+            raise ValueError("Base game list layout width must be greater than zero.")
+        max_width_scale = width / base_layout_width
         cls.SCALE_FACTOR = min(cls.SCALE_Y, max_width_scale)
         
         # Update all scaled dimensions
