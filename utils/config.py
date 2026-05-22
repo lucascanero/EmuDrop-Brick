@@ -87,6 +87,13 @@ class Config:
     BASE_GAME_LIST_IMAGE_SIZE = 400
     BASE_GAME_LIST_CARD_PADDING = 20
     BASE_GAME_LIST_SPACING_BETWEEN = 120
+
+    # Widest composite layout (game list + image + spacing) used to cap scaling on narrow screens.
+    BASE_LAYOUT_MAX_WIDTH = (
+        BASE_GAME_LIST_WIDTH +
+        BASE_GAME_LIST_IMAGE_SIZE +
+        BASE_GAME_LIST_SPACING_BETWEEN
+    )
     
     GAME_LIST_ITEM_HEIGHT = int(BASE_GAME_LIST_ITEM_HEIGHT * SCALE_FACTOR)
     GAME_LIST_SPACING = int(BASE_GAME_LIST_SPACING * SCALE_FACTOR)
@@ -241,12 +248,7 @@ class Config:
         # Keep per-axis scales available for any view-specific adjustments.
         # Use the widest composite layout (game list + image + spacing) to cap scaling on narrow screens.
         # This width guard prevents horizontal overflow, so SCALE_X is not required in the final cap.
-        base_layout_width = (
-            cls.BASE_GAME_LIST_WIDTH +
-            cls.BASE_GAME_LIST_IMAGE_SIZE +
-            cls.BASE_GAME_LIST_SPACING_BETWEEN
-        )
-        max_width_scale = width / base_layout_width
+        max_width_scale = width / cls.BASE_LAYOUT_MAX_WIDTH
         cls.SCALE_FACTOR = min(cls.SCALE_Y, max_width_scale)
         
         # Update all scaled dimensions
