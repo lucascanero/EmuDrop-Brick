@@ -238,7 +238,13 @@ class Config:
         cls.SCREEN_HEIGHT = height
         cls.SCALE_X = width / cls.BASE_SCREEN_WIDTH
         cls.SCALE_Y = height / cls.BASE_SCREEN_HEIGHT
-        cls.SCALE_FACTOR = min(cls.SCALE_X, cls.SCALE_Y)
+        base_layout_width = (
+            cls.BASE_GAME_LIST_WIDTH +
+            cls.BASE_GAME_LIST_IMAGE_SIZE +
+            cls.BASE_GAME_LIST_SPACING_BETWEEN
+        )
+        max_width_scale = width / base_layout_width if base_layout_width else cls.SCALE_X
+        cls.SCALE_FACTOR = min(cls.SCALE_Y, max_width_scale)
         
         # Update all scaled dimensions
         for attr_name in dir(cls):
