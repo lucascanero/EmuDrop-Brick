@@ -247,7 +247,6 @@ class Config:
         cls.SCALE_Y = height / cls.BASE_SCREEN_HEIGHT
         # Keep per-axis scales available for any view-specific adjustments.
         # Use the widest composite layout (game list + image + spacing) to cap scaling on narrow screens.
-        # This width guard prevents horizontal overflow, so SCALE_X is not required in the final cap.
         max_width_scale = width / cls.BASE_LAYOUT_MAX_WIDTH
         cls.SCALE_FACTOR = min(cls.SCALE_Y, max_width_scale)
         
