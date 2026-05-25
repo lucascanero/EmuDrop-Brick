@@ -64,7 +64,7 @@ jobs:
             -v "$GITHUB_WORKSPACE":/workspace \
             -w /workspace \
             crossmix-toolchain \
-            bash -lc "python3 -m pip install -r requirements.txt && pyinstaller --onefile --noconsole --name EmuDrop main.py"
+            bash -lc "pyinstaller --onefile --noconsole --name EmuDrop main.py"
 
       - name: Package Trimui Brick variants
         shell: bash
