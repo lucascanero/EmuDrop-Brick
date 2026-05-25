@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-release:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -43,8 +43,23 @@ jobs:
           pip install -r requirements.txt
           pip install pysdl2
 
-      - name: Build binary
-        run: pyinstaller --onefile --noconsole --name EmuDrop main.py
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build toolchain image
+        run: |
+          docker build -t crossmix-toolchain ./tools/toolchain --platform linux/arm64
+
+      - name: Cross-compile binary inside toolchain
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
+        run: |
+          USER_ID=$(id -u)
+          GROUP_ID=$(id -g)
+          docker run --rm --platform linux/arm64 -u $USER_ID:$GROUP_ID -v "$GITHUB_WORKSPACE":/root/workspace crossmix-toolchain bash -lc "cd /root/workspace && pip install -r requirements.txt && pyinstaller --onefile --noconsole --name EmuDrop main.py"
 
       - name: Package Trimui Brick variants
         shell: bash
