@@ -1,0 +1,57 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libsdl2-dev \
+            libsdl2-image-2.0-0 \
+            libsdl2-mixer-2.0-0 \
+            libsdl2-ttf-2.0-0
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build binary
+        run: pyinstaller --onefile --noconsole --name EmuDrop main.py
+
+      - name: Package Trimui Brick variants
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_dir="dist/release"
+          mkdir -p "${release_dir}"
+
+          for variant in "EmuDrop" "EmuDropKnulli" "EmuDropStockOS"; do
+            cp dist/EmuDrop "platform/Trimui Brick/${variant}/EmuDrop"
+            (
+              cd "platform/Trimui Brick"
+              zip -r "../../${release_dir}/${variant}.zip" "${variant}.zip"
+            )
+          done
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/release/*.zip

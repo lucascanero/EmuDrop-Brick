@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Repository name in the format "owner/repo"
-REPO="ahmadteeb/EmuDrop"
+REPO="lucascanero/EmuDrop-Brick"
 
 # Local version file
 VERSION_FILE="version.txt"
