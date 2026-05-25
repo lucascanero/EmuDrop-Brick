@@ -69,6 +69,7 @@ update_version_file() {
 
 # Main flow
 echo "Checking for update for database"
+echo -e "{ \"type\":\"info\", \"size\":2, \"duration\":3000, \"x\":400, \"y\":0,  \"message\":\"Checking for update for database...\",  \"icon\":\"\" }" >/tmp/trimui_osd/osd_toast_msg
 
 local_version=$(get_local_version)
 latest_version=$(get_latest_version)
@@ -78,12 +79,16 @@ echo "Latest version: $latest_version"
 
 if [[ "$local_version" == "$latest_version" ]]; then
     echo "You are already on the latest version: $latest_version"
+    echo -e "{ \"type\":\"info\", \"size\":3, \"duration\":3000, \"x\":200, \"y\":0,  \"message\":\"You are already on the latest version: $latest_version\",  \"icon\":\"\" }" >/tmp/trimui_osd/osd_toast_msg
 else
     echo "New update available: $latest_version"
+    echo -e "{ \"type\":\"info\", \"size\":3, \"duration\":3000, \"x\":300, \"y\":0,  \"message\":\"New update available: $latest_version\",  \"icon\":\"\" }" >/tmp/trimui_osd/osd_toast_msg
     echo "Please wait, this may take a few moments..."
+    echo -e "{ \"type\":\"info\", \"size\":3, \"duration\":3000, \"x\":200, \"y\":0,  \"message\":\"Please wait, this may take a few moments...\",  \"icon\":\"\" }" >/tmp/trimui_osd/osd_toast_msg
     download_latest_release "$latest_version"
     clean_local_files
     move_db_file
     update_version_file
     echo "Database update complete."
+    echo -e "{ \"type\":\"info\", \"size\":3, \"duration\":3000, \"x\":400, \"y\":0,  \"message\":\"Database update complete.\",  \"icon\":\"\" }" >/tmp/trimui_osd/osd_toast_msg
 fi

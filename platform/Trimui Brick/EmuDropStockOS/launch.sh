@@ -9,8 +9,10 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/SDCARD/System/lib/
 
 if ping -c 1 8.8.8.8 > /dev/null 2>&1; then
     echo "Internet connection detected."
+    echo -e "{ \"type\":\"info\", \"size\":2, \"duration\":5000, \"x\":300, \"y\":0,  \"message\":\"Internet connection detected.\",  \"icon\":\"\" }" >/tmp/trimui_osd/osd_toast_msg
 else 
     echo "No internet connection. Press B to exit."
+    echo -e "{ \"type\":\"info\", \"size\":2, \"duration\":5000, \"x\":300, \"y\":0,  \"message\":\"No internet connection. Press B to exit.\",  \"icon\":\"\" }" >/tmp/trimui_osd/osd_toast_msg
     exit
 fi
 
