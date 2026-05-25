@@ -57,9 +57,11 @@ jobs:
         env:
           GITHUB_WORKSPACE: ${{ github.workspace }}
         run: |
-          USER_ID=$(id -u)
-          GROUP_ID=$(id -g)
-          docker run --rm --platform linux/arm64 -u $USER_ID:$GROUP_ID -v "$GITHUB_WORKSPACE":/root/workspace crossmix-toolchain bash -lc "cd /root/workspace && pip install -r requirements.txt && pyinstaller --onefile --noconsole --name EmuDrop main.py"
+          docker run --rm --platform linux/arm64 \
+            -v "$GITHUB_WORKSPACE":/root/workspace \
+            -w /root/workspace \
+            crossmix-toolchain \
+            bash -lc "python3 -m pip install -r requirements.txt && pyinstaller --onefile --noconsole --name EmuDrop main.py"
 
       - name: Package Trimui Brick variants
         shell: bash
