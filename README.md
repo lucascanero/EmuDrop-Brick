@@ -21,7 +21,6 @@ If you like this project, consider supporting me on Buy Me a Coffee:
     </tr>
   </thead>
   <tbody align="center">
-    <tr><td>TrimUI Smart Pro</td><td><code>Stock</code> <code>Crossmix</code> <code>Knulli</code></td></tr>
     <tr><td>TrimUI Brick</td><td><code>Stock</code> <code>Crossmix</code> <code>Knulli</code></td></tr>
     <tr><td>RG35XX Original</td><td><code>Knulli</code></td></tr>
     <tr><td>RG35XX 2024</td><td><code>Knulli</code></td></tr>
