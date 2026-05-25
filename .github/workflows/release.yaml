@@ -43,19 +43,24 @@ jobs:
           release_dir="dist/release"
           mkdir -p "${release_dir}"
 
-          for variant in "EmuDrop" "EmuDropKnulli" "EmuDropStockOS"; do
+          for variant in "EmuDrop" "EmuDropKnulli"; do
             cp dist/EmuDrop "platform/Trimui Brick/${variant}/EmuDrop"
             (
-              cd "platform/Trimui Brick"
-              if [ "${variant}" = "EmuDropStockOS" ]; then
-                tar -czf "../../${release_dir}/${variant}.tar.gz" "${variant}"
-              else
-                zip -r "../../${release_dir}/${variant}.zip" "${variant}"
-              fi
+              cd "platform/Trimui Brick/${variant}"
+              zip -r "../../../${release_dir}/${variant}.zip" .
+            )
+          done
+          for variant in "EmuDropStockOS"; do
+            cp dist/EmuDrop "platform/Trimui Brick/${variant}/EmuDrop"
+            (
+              cd "platform/Trimui Brick/${variant}"
+              tar -czf "../../../${release_dir}/${variant}.tar.gz" .
             )
           done
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/release/*.zip
+          files: |
+            dist/release/*.zip
+            dist/release/*.tar.gz
