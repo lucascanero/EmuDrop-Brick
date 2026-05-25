@@ -36,7 +36,7 @@ jobs:
       - name: Build binary
         run: pyinstaller --onefile --noconsole --name EmuDrop main.py
 
-      - name: Package Trimui Smart Pro variants
+      - name: Package Trimui Brick variants
         shell: bash
         run: |
           set -euo pipefail
@@ -44,10 +44,10 @@ jobs:
           mkdir -p "${release_dir}"
 
           for variant in "EmuDrop" "EmuDropKnulli" "EmuDropStockOS"; do
-            cp dist/EmuDrop "platform/Trimui Smart Pro/${variant}/EmuDrop"
+            cp dist/EmuDrop "platform/Trimui Brick/${variant}/EmuDrop"
             (
-              cd "platform/Trimui Smart Pro"
-              zip -r "../../${release_dir}/EmuDrop-Trimui-Smart-Pro-${variant}-${GITHUB_REF_NAME}.zip" "${variant}"
+              cd "platform/Trimui Brick"
+              zip -r "../../${release_dir}/${variant}.zip" "${variant}.zip"
             )
           done
 
