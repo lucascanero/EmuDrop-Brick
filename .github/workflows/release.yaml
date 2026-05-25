@@ -46,15 +46,15 @@ jobs:
           for variant in "EmuDrop" "EmuDropKnulli"; do
             cp dist/EmuDrop "platform/Trimui Brick/${variant}/EmuDrop"
             (
-              cd "platform/Trimui Brick/${variant}"
-              zip -r "../../../${release_dir}/${variant}.zip" .
+              cd "platform/Trimui Brick"
+              zip -r "../../${release_dir}/${variant}.zip" "${variant}"
             )
           done
           for variant in "EmuDropStockOS"; do
             cp dist/EmuDrop "platform/Trimui Brick/${variant}/EmuDrop"
             (
-              cd "platform/Trimui Brick/${variant}"
-              tar -czf "../../../${release_dir}/${variant}.tar.gz" .
+              cd "platform/Trimui Brick"
+              tar -czf "../../dist/release/EmuDropStockOS.tar.gz" "EmuDropStockOS"
             )
           done
 
