@@ -47,7 +47,7 @@ jobs:
             cp dist/EmuDrop "platform/Trimui Brick/${variant}/EmuDrop"
             (
               cd "platform/Trimui Brick/${variant}"
-              zip -r "../../${release_dir}/${variant}.zip" .
+              zip -r "../../../${release_dir}/${variant}.zip" .
             )
           done
 
