@@ -8,12 +8,12 @@ class Config:
     APP_NAME = "EmuDrop" 
     
     # Base screen settings (reference resolution)
-    BASE_SCREEN_WIDTH = 1280
-    BASE_SCREEN_HEIGHT = 720
+    BASE_SCREEN_WIDTH = 1024
+    BASE_SCREEN_HEIGHT = 768
     
     # Current screen settings
-    SCREEN_WIDTH = 1280
-    SCREEN_HEIGHT = 720
+    SCREEN_WIDTH = 1024
+    SCREEN_HEIGHT = 768
     
     # Scaling factors
     SCALE_X = SCREEN_WIDTH / BASE_SCREEN_WIDTH
