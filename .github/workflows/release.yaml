@@ -47,7 +47,11 @@ jobs:
             cp dist/EmuDrop "platform/Trimui Brick/${variant}/EmuDrop"
             (
               cd "platform/Trimui Brick"
-              zip -r "../../${release_dir}/${variant}.zip" "${variant}"
+              if [ "${variant}" = "EmuDropStockOS" ]; then
+                tar -czf "../../${release_dir}/${variant}.tar.gz" "${variant}"
+              else
+                zip -r "../../${release_dir}/${variant}.zip" "${variant}"
+              fi
             )
           done
 
