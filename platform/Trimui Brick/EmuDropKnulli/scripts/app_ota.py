@@ -8,7 +8,7 @@ from pathlib import Path
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Constants
-REPO = "ahmadteeb/EmuDrop"
+REPO = "lucascanero/EmuDrop-Brick"
 VERSION_FILE = "version.txt"
 API_URL = f"https://api.github.com/repos/{REPO}/tags"
 ZIP_FILE_NAME = "EmuDropKnulli.zip"
